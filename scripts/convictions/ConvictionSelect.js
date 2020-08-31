@@ -12,7 +12,7 @@ const createSelectorOptions = (crimesArray) => {
         ` 
         // create HTML for an individual officer for each officer in officersArray, and return it in a new array (HTMLArray)
     })
-
+    innerElement.innerHTML = `<option value="none">Please select a crime...</option>`
     innerElement.innerHTML += HTMLCrimeArray.join(" "); // this line REPLACES whatever is currently in the inner HTML of contentElement
 }
 
@@ -22,7 +22,7 @@ export const CreateCrimeSelector = () => {
     .then(() => {
         const convictionsArray = useConvictions();
         // create the selector element
-        document.querySelector(".filters__crime").innerHTML = `<select class="selector">Please select a crime... </selector>`;
+        document.querySelector(".filters__crime").innerHTML = `<select class="selector"></selector>`;
         // add the dropdown options
         createSelectorOptions(convictionsArray);
     })

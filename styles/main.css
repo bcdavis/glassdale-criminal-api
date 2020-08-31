@@ -5,11 +5,28 @@
 } */
 
 header {
-    margin: 0;
-    padding: 0;
-    height: 50px;
+    display: flex;
+    height: 100px;
     background-color: lightgrey;
     width: 100%;
+    justify-content: flex-start;
+}
+
+.filters {
+    display: flex;
+    /* margin-bottom: auto; */
+    /* align-items: flex-end; */
+
+}
+
+.filter {
+    flex: 1 0 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.filters__crime{
+    /* margin-top: auto; */
+    /* margin-bottom: auto; */
 }
 
 h2 {
