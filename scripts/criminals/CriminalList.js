@@ -10,7 +10,7 @@ const addCriminalsToDOM = (criminalsArray) => {
         // create HTML for an individual officer for each officer in officersArray, and return it in a new array (HTMLArray)
     })
 
-    contentElement.innerHTML = HTMLArray.join(" ");
+    contentElement.innerHTML = HTMLArray.join(" "); // this line REPLACES whatever is currently in the inner HTML of contentElement
 
 }
 

@@ -2,7 +2,8 @@ console.log("It's Monday...");
 
 import {getOfficers} from "./officers/OfficerProvider.js"
 import {CriminalList} from "./criminals/CriminalList.js"
-import { OfficerList, ClearOfficerList } from "./officers/OfficerList.js";
+import { OfficerList } from "./officers/OfficerList.js";
+import { CreateCrimeSelector } from "./convictions/ConvictionSelect.js"
 
 // let officerData = [];
 
@@ -17,11 +18,15 @@ import { OfficerList, ClearOfficerList } from "./officers/OfficerList.js";
 //CriminalList();
 
 let getOfficersBtn = document.getElementById("getOfficersBtn");
-const contentElement = document.querySelector(".officersContainer");
+
+CreateCrimeSelector();
+
+
 
 getOfficersBtn.addEventListener("click", (e) => {
-    ClearOfficerList();
     OfficerList();
 })
+
+CriminalList();
 
 

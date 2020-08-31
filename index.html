@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <title>Glassdale PD</title>
     <link rel="stylesheet" href="./styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -12,14 +14,30 @@
     <main class="container">
         <header>
             <div class="filters">
-                <div class="filter filters__crime"></div>
-                <div class="filter filters__incarceration"></div>
-                <div class="filter filters__officer"></div>
+                <div class="filter filters__crime">
+                </div>
+                <div class="filter filters__incarceration">
+                    <select class="selector">Incarceration start/end time...
+                        
+                    </select>
+                </div>
+                <div class="filter filters__officer">
+                    <select class="selector">Please select an officer...
+                        
+                    </select>
+                </div>
             </div>
         </header>
-        <button id="getOfficersBtn">Get Officers</button>
+        <button id="getOfficersBtn" disabled="true">Get Officers</button>
         <article class="officersContainer"></article>
         <article class="criminalsContainer"></article>
+        <footer>
+            <div>
+                <p>This is the footer</p>
+                <p>This is the footer 2</p>
+                <p>This is the footer 3</p>
+            </div>
+        </footer>
     </main>
 
 

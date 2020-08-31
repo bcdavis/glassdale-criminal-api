@@ -1,0 +1,74 @@
+
+/* body {
+    margin: 0;
+    padding: 0;
+} */
+
+header {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    background-color: lightgrey;
+    width: 100%;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.criminalsContainer { 
+    /* border: red dotted 2px; */
+    display: flex;
+    /* flex: 2 0 10%; */
+    flex-wrap: wrap;
+    margin: 50px 50px;
+    justify-content: space-between;
+    min-width: 825px;
+}
+
+
+.criminalCard {
+    flex: 2 0 25%;
+    border: dotted black 2px;
+    margin: 20px 10px;
+    padding: 8px;
+    max-width: 25%;
+}
+
+.crim-card-info {
+    font-family: 'Lato', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
+}
+
+.crim-card-info > p {
+    margin: 2px 0;
+}
+
+footer {
+    /* margin: 0; */
+    /* padding: 0; */
+    height: 100px;
+    background-color: lightgrey;
+    width: 100%;
+}
+
+
+footer { 
+    display: flex;
+    justify-content: center;
+}
+
+footer div {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: space-between;
+}
+
+footer div p {
+    /* flex: 2 0 25%; */
+    margin: 0 20px;
+
+
+}
