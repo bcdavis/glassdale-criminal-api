@@ -25,6 +25,7 @@ header {
     margin-bottom: auto;
 }
 .filters__crime{
+    padding: 5px;
     /* margin-top: auto; */
     /* margin-bottom: auto; */
 }
@@ -37,10 +38,10 @@ h2 {
 .criminalsContainer { 
     /* border: red dotted 2px; */
     display: flex;
-    /* flex: 2 0 10%; */
+    /* flex: 2 0 100%; */
     flex-wrap: wrap;
     margin: 50px 50px;
-    justify-content: space-between;
+    justify-content: left;
     min-width: 825px;
 }
 
@@ -48,9 +49,10 @@ h2 {
 .criminalCard {
     flex: 2 0 25%;
     border: dotted black 2px;
-    margin: 20px 10px;
+    margin: 20px auto;
     padding: 8px;
     max-width: 25%;
+    min-width: 215px;
 }
 
 .crim-card-info {
