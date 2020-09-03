@@ -3,10 +3,6 @@
 
 import { useConvictions, getConvictions} from "./ConvictionProvider.js"
 
-/*
-    Which element in your HTML contains all components?
-    That's your Event Hub. Get a reference to it here.
-*/
 const eventHub = document.querySelector(".container")
 const contentTarget = document.querySelector(".filters__crime")
 
@@ -18,8 +14,9 @@ eventHub.addEventListener("change", event => {
         // Create custom event. Provide an appropriate name.
         const customEvent = new CustomEvent("crimeChosen", {
             detail: {
-                crimeThatWasChosen: event.target.value,
-                crimeId: event.target.id
+                crimeThatWasChosen: event.target.value, // this is a string
+                // crimeId: event.target.id // == "crimeSelect" Not the actual ID of the crime selected
+                // // ^ this actually tells me nothing????
             }
         })
 
@@ -49,16 +46,30 @@ eventHub.addEventListener("change", event => {
 
 
 const createSelectorOptions = (crimesArray) => {
+
+// Terra's crime name alphabetical sorter -------------- 
+    const crimeNames = crimesArray.map((crimeObj) => {
+        let crimeName = crimeObj.name;
+        return crimeName;
+    });
+
+    const sortedArray = crimeNames.sort();
+
+    // This works because, in the end, we are only comparing strings:
+    // e.g. criminal.conviction (string) === event.detail.crimeThatWasChosen (crimeObj.name (string))
+
+// -----------------------------------------------------
+
     contentTarget.innerHTML = `
-    <select id="crimeSelect">
-        <option value="none">Please select a crime...</option>
+    <select id="crimeSelect" class="selector-filter">
+        <option value="default">Please select a crime...</option>
         ${
-            crimesArray.map(crime => `
-            <option value="${crime.name}">${crime.name}</option>
+            sortedArray.map(crime => `
+            <option value="${crime}">${crime}</option>
             `).join("")
         }
         
-    </selector>`
+    </select>`
     //innerElement.innerHTML = `<option value="none">Please select a crime...</option>`
     //innerElement.innerHTML += HTMLCrimeArray.join(" "); // this line REPLACES whatever is currently in the inner HTML of contentElement
 }

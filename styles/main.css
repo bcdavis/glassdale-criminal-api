@@ -1,8 +1,13 @@
 
-/* body {
+body {
     margin: 0;
     padding: 0;
-} */
+}
+
+#noteFormContainer { 
+    border: 2px red dotted;
+    margin: 10px;
+}
 
 header {
     display: flex;
@@ -13,6 +18,7 @@ header {
 }
 
 .filters {
+    width: 650px;
     display: flex;
     /* margin-bottom: auto; */
     /* align-items: flex-end; */
@@ -20,15 +26,20 @@ header {
 }
 
 .filter {
-    flex: 1 0 100%;
+    display: flex;
+    /* flex: 1 0 100%; */
+    margin-top: auto;
+    padding: 5px;
+}
+
+.selector-filter {
+    min-width: 200px;
+}
+/* .filters__crime{
+    padding: 5px;
     margin-top: auto;
     margin-bottom: auto;
-}
-.filters__crime{
-    padding: 5px;
-    /* margin-top: auto; */
-    /* margin-bottom: auto; */
-}
+} */
 
 h2 {
     margin-top: 0;
@@ -49,7 +60,7 @@ h2 {
 .criminalCard {
     flex: 2 0 25%;
     border: dotted black 2px;
-    margin: 20px auto;
+    margin: 20px 20px;
     padding: 8px;
     max-width: 25%;
     min-width: 215px;
@@ -62,6 +73,13 @@ h2 {
 
 .crim-card-info > p {
     margin: 2px 0;
+}
+
+.noteListContainer { 
+    float: left;
+    background-color: darkcyan;
+    width: 50px;
+    height: 400px;
 }
 
 footer {

@@ -3,6 +3,7 @@ import {OfficerHTML} from "./Officer.js";
 import {getOfficers, useOfficers} from "./OfficerProvider.js";
 
 
+
 const addOfficersToDOM = (officersArray) => {
     const contentElement = document.querySelector(".officersContainer");
     let HTMLArray = officersArray.map(singleOfficer => {
