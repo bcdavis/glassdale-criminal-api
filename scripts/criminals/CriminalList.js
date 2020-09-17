@@ -22,11 +22,145 @@ import {CriminalHTML} from "./Criminal.js"
 
 const eventHub = document.querySelector(".container");
 
+eventHub.addEventListener("associatesClicked", event => {
+    // console.log("We received a click event from the Alibis button!");
+    // display all associates/alibis for criminal
+    const targetCriminal = useCriminals().find(criminal => {
+            // find one criminal that has the matching criminalId
+        return (criminal.id === parseInt(event.detail.chosenCriminal))
+    })
+    //console.log("TargetCriminal", targetCriminal);
+    const alibiBtnTarget = document.getElementById(`associates--${targetCriminal.id}`);
+    const alibiTarget = document.querySelector(`.alibiDialog--${targetCriminal.id}`);
+
+
+    // console.log("alibiBtnTarget", alibiBtnTarget.innerHTML);
+    if (alibiTarget.classList.contains("hidden")){ 
+        // if associate and alibi list is not visible, toggle visible
+        alibiTarget.classList.remove("hidden");
+        // change name of alibi btn to "Hide Alibis"
+        alibiBtnTarget.textContent = "Hide Alibis";
+    }
+    else { 
+        // if associate and alibi list is visible, toggle invisible
+        alibiTarget.classList.add("hidden");
+        // change name of alibi btn to "Show Alibis"
+        alibiBtnTarget.textContent = "Show Alibis";
+    }
+    
+})
+
 // creating variables to store value for using multiple filters at once
-let crimeThatWasSelected = "default";
-let officerThatWasSelected = "default";
+let crimeSelected = "default"; // default = invalid crime selected
+let officerSelected = "default"; // default = invalid officer selected
+
+/**
+ * 
+ * The refactored code below works perfectly for the two current filters on the Glassdale Criminal API site.
+ * However, I feel that it is very "hard-coded" to operate with specifically an officer and crime filter.
+ * That means that if another filter were added, the updateFilterState function would need to be altered.
+ * I'd like the filtering process to be very generic and autonomous, where it works for any number of 
+ * properly formatted filters. 
+ * 
+ * TO-DO: Revisit this refactored code and attempt to make it generic 
+ */
+
+// Filter state consists of two bits - crimeSelected, officerSelected 
+// crimeSelected and officerSelected are represented by a single binary bit (1 or 0): 
+// ---- if either variable is it's "default" value (no valid crime or officer selected), it is represented as a "0"
+// ---- if either variable is not "default" (a valid crime or officer selected), it is represented as a "1"
+
+// state 1: "00" --> crimeSelected invalid, officerSelected invalid
+// The unfiltered CriminalList is rendered on the DOM
+
+// state 2: "01" --> crimeSelected invalid, officerSelected valid
+// Criminal list is filtered by selected officer only
+
+// state 3: "10" --> crimeSelected valid, officerSelected invalid
+// CriminalList is filtered by selected crime only
+
+// state 4: "11" --> both crimeSelected and officerSelected are valid
+// CriminalList is filtered by both the selected crime and selected officer
 
 
+eventHub.addEventListener("crimeChosen", event => {
+    crimeSelected = event.detail.crimeThatWasChosen; // update the state of the crimeSelected variable
+    updateFilterState(crimeSelected, officerSelected);
+
+})
+
+eventHub.addEventListener("officerChosen", event => {
+    officerSelected = event.detail.officerChosen; // update the state of the officerSelected variable
+    updateFilterState(crimeSelected, officerSelected);
+})
+
+const updateFilterState = (crime, officer) => { // crime = crimeSelected, officer = officerSelected
+    // setup binary state representation
+    let crimeState, officerState, matchingCriminals; 
+    const criminalsToFilter = useCriminals();
+
+    if(crime === "default"){
+        crimeState = "0";
+    }
+    else {
+        crimeState = "1";
+    }
+
+    if(officer === "default"){
+        officerState = "0";
+    }
+    else { 
+        officerState = "1"
+    }
+
+    const totalFilterState = crimeState + officerState; // creates a 2-character string "00", "01", etc.
+    console.log("totalFilterState: ", totalFilterState);
+    // Logic to determine what to render
+    switch(totalFilterState) {
+        case "00":
+            console.log("no valid crime or officer selected -- show unfiltered criminalList")
+            CriminalList();
+            break;
+        case "01":
+            console.log("invalid crime selected, valid officer selected -- filter by officer ", officer)
+            matchingCriminals = criminalsToFilter.filter(currentCriminal => {
+                return currentCriminal.arrestingOfficer === officer;
+            })
+            addCriminalsToDOM(matchingCriminals);
+            break;
+        case "10":
+            console.log("valid crime selected, invalid officer selected -- filter by crime ", crime)
+            matchingCriminals = criminalsToFilter.filter(currentCriminal => {
+                return currentCriminal.conviction === crime;
+            })
+            addCriminalsToDOM(matchingCriminals);
+            break;
+        case "11": 
+            console.log("valid crime selected, valid officer selected -- filter by both ", crime, officer)
+            matchingCriminals = criminalsToFilter.filter(currentCriminal => {
+                return (currentCriminal.arrestingOfficer === officer && currentCriminal.conviction === crime);
+            })
+            addCriminalsToDOM(matchingCriminals);
+            break;
+        
+        default:
+            console.log("State not recognized -- displaying all criminals");
+            CriminalList();
+        
+    }
+}
+
+/**
+ * 
+ * Below is the previous code which worked for each individual filter and for both filters at the same time.
+ * However, when both filers were active and the user removed one of them, the event listener would recognize 
+ * a change in the filter back to its default value and call to render the unfiltered list of criminals --
+ * -- even though one of the filters was still active. 
+ * 
+ */
+
+
+/*
 // Listen for the custom event you dispatched in ConvictionSelect
 eventHub.addEventListener("crimeChosen", event => {
     // crimeThatWasSelected = event.detail.crimeThatWasChosen;
@@ -117,6 +251,7 @@ eventHub.addEventListener("officerSelected", event => {
 
     //}
 })
+*/
 
 /*
 const applyCrimeFilter = (criminalsToFilter, officerSelected, currentEvent) => {
@@ -151,6 +286,8 @@ const applyOfficerFilter = (criminalsToFilter, crimeSelected, currentEvent) => {
     return filteredCriminals
 }
 */
+
+
 
 
 const addCriminalsToDOM = (criminalsArray) => {

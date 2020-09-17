@@ -6,6 +6,8 @@ import { OfficerList } from "./officers/OfficerList.js";
 import { CreateCrimeSelector } from "./convictions/ConvictionSelect.js"
 import { CreateOfficerSelector } from "./officers/OfficerSelect.js"
 import { NoteForm } from "./notes/NoteForm.js";
+import { NoteList } from "./notes/NoteList.js";
+import { WitnessList } from "./witnesses/WitnessList.js"
 
 // let officerData = [];
 
@@ -28,5 +30,12 @@ CreateCrimeSelector();
 CreateOfficerSelector();
 CriminalList();
 NoteForm();
+NoteList();
+
+let getWitnessesBtn = document.getElementById("getWitnessesBtn");
+
+getWitnessesBtn.addEventListener("click", (e) => {
+    WitnessList();
+})
 
 

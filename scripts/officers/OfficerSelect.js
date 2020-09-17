@@ -11,7 +11,7 @@ eventHub.addEventListener("change", changeEvent => {
         const selectedOfficer = changeEvent.target.value
 
         // Define a custom event
-        const customEvent = new CustomEvent("officerSelected", {
+        const customEvent = new CustomEvent("officerChosen", {
             detail: {
                 officerChosen: selectedOfficer,
                 // officerId: changeEvent.target.id // returns 'officerSelect'

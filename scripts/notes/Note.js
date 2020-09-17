@@ -1,10 +1,19 @@
 
 
-const eventHub = document.querySelector("#main")
+// Take notes made and prepare to display on website
 
-export
+const eventHub = document.querySelector(".container")
+
+export const NoteHTMLConverter = (noteObj) => {
+    return `
+        <section class="note">
+            <div class="note--timeStamp">Timestamp: ${new Date(noteObj.date).toLocaleDateString('en-US')}</div>
+            <div class="note--title">Criminal: ${ noteObj.suspectObj.name }</div>
+            <div class="note--content">${ noteObj.noteText }</div>
+        </section>
+    `
+}
 
 
 
 
-new Date(noteObject.date).toLocaleDateString('en-US') (noteobj.date is in milliseconds)

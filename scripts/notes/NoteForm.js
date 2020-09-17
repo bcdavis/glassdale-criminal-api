@@ -12,13 +12,18 @@ eventHub.addEventListener("click", clickEvent => {
         const noteSuspect = document.querySelector("#noteForm--criminal")
 
         if( noteSuspect.value !== "default"){
+            console.log("Created a new note!");
             const newNote = {
                 noteText: noteContent.value,
-                suspect: noteSuspect.value, 
+                suspectId: parseInt(noteSuspect.value), 
                 date: Date.now()
             }
 
             saveNote(newNote);
+
+            // no longer need previous note informaiton
+            noteContent.value = "";
+            noteSuspect.value = "";
 
 
         } else {
@@ -35,19 +40,20 @@ eventHub.addEventListener("click", clickEvent => {
 
 const render = (criminalArray) => {
     contentTarget.innerHTML = `
-        <h3>New Note Details</h3>
-            <textarea id="noteForm--text" placeholder="Put a note here"></textarea>
-
+        <h3 class="formTitle">New Note Details</h3>
+        <div class="actualFormContainer">
             <select class="dropdown" id="noteForm--criminal">
                 <option value="default">Please select a criminal...</option>
                 ${
                     criminalArray.map(crimeObj => `
-                        <option value="${crimeObj.name}">${crimeObj.name}</option>
+                        <option value="${crimeObj.id}">${crimeObj.name}</option>
                         `).join("")
                 }
                 
             </select>
-        <button id="saveNote">Save Note</button>
+            <textarea id="noteForm--text" placeholder="Put a note here"></textarea>
+            <button id="saveNote">Save Note</button>
+        </div>
     `
 }
 

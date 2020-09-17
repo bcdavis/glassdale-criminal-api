@@ -28,9 +28,6 @@ export const saveNote = (note) => {
         },
         body: JSON.stringify(note)
     })
-    .then((result) => {
-        console.log("WE DID IT!");
-    })
     .then(getNotes) // go and get all the notes (including the new one)
     .then(dispatchStateChangeEvent) 
 }
