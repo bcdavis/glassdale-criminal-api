@@ -52,7 +52,7 @@ const render = (criminalArray) => {
                 
             </select>
             <textarea id="noteForm--text" placeholder="Put a note here"></textarea>
-            <button id="saveNote">Save Note</button>
+            <button type="button" id="saveNote">Save Note</button>
         </div>
     `
 }
