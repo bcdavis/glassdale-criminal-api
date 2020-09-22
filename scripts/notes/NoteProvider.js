@@ -1,3 +1,9 @@
+/*
+hold on to array of notes
+useNotes - makes copy of array of notes and returns
+get all the notes from DB
+add a note to the DB
+*/
 
 let notes = [];
 
@@ -17,7 +23,6 @@ export const getNotes = () => {
         .then(parsedNotes => {
             notes = parsedNotes
         })
-
 }
 
 export const saveNote = (note) => {

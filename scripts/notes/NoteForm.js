@@ -45,9 +45,10 @@ const render = (criminalArray) => {
             <select class="dropdown" id="noteForm--criminal">
                 <option value="default">Please select a criminal...</option>
                 ${
-                    criminalArray.map(crimeObj => `
-                        <option value="${crimeObj.id}">${crimeObj.name}</option>
-                        `).join("")
+                    criminalArray.map(criminalObj => {
+                        return `
+                        <option value="${criminalObj.id}">${criminalObj.name}</option>
+                        `}).join("")
                 }
                 
             </select>

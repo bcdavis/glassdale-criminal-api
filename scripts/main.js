@@ -1,6 +1,6 @@
-console.log("It's Monday...");
+console.log("Good Morning, Main.js!");
 
-import {getOfficers} from "./officers/OfficerProvider.js"
+//import {getOfficers} from "./officers/OfficerProvider.js"
 import {CriminalList} from "./criminals/CriminalList.js"
 import { OfficerList } from "./officers/OfficerList.js";
 import { CreateCrimeSelector } from "./convictions/ConvictionSelect.js"
