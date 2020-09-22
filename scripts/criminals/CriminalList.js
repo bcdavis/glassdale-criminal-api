@@ -1,7 +1,8 @@
 
 import { getCriminals, useCriminals } from "./CriminalProvider.js"
 import {CriminalHTML} from "./Criminal.js"
-
+import {getCriminalFacilities, useCriminalFacilities} from "../facility/CriminalFacilityProvider.js"
+import {getFacilities, useFacilities} from "../facility/FacilityProvider.js"
 
 
 
@@ -114,37 +115,37 @@ const updateFilterState = (crime, officer) => { // crime = crimeSelected, office
     }
 
     const totalFilterState = crimeState + officerState; // creates a 2-character string "00", "01", etc.
-    console.log("totalFilterState: ", totalFilterState);
+    //console.log("totalFilterState: ", totalFilterState);
     // Logic to determine what to render
     switch(totalFilterState) {
         case "00":
-            console.log("no valid crime or officer selected -- show unfiltered criminalList")
+            //console.log("no valid crime or officer selected -- show unfiltered criminalList")
             CriminalList();
             break;
         case "01":
-            console.log("invalid crime selected, valid officer selected -- filter by officer ", officer)
+            //console.log("invalid crime selected, valid officer selected -- filter by officer ", officer)
             matchingCriminals = criminalsToFilter.filter(currentCriminal => {
                 return currentCriminal.arrestingOfficer === officer;
             })
-            addCriminalsToDOM(matchingCriminals);
+            CriminalList(matchingCriminals);
             break;
         case "10":
-            console.log("valid crime selected, invalid officer selected -- filter by crime ", crime)
+            //console.log("valid crime selected, invalid officer selected -- filter by crime ", crime)
             matchingCriminals = criminalsToFilter.filter(currentCriminal => {
                 return currentCriminal.conviction === crime;
             })
-            addCriminalsToDOM(matchingCriminals);
+            CriminalList(matchingCriminals);
             break;
         case "11": 
-            console.log("valid crime selected, valid officer selected -- filter by both ", crime, officer)
+            //console.log("valid crime selected, valid officer selected -- filter by both ", crime, officer)
             matchingCriminals = criminalsToFilter.filter(currentCriminal => {
                 return (currentCriminal.arrestingOfficer === officer && currentCriminal.conviction === crime);
             })
-            addCriminalsToDOM(matchingCriminals);
+            CriminalList(matchingCriminals);
             break;
         
         default:
-            console.log("State not recognized -- displaying all criminals");
+            //console.log("State not recognized -- displaying all criminals");
             CriminalList();
         
     }
@@ -288,8 +289,26 @@ const applyOfficerFilter = (criminalsToFilter, crimeSelected, currentEvent) => {
 */
 
 
+const addCriminalsToDOM = (criminalsToRender, allFacilities, allRelationships) => {
+    // Step 1 - Iterate all criminals
+    document.querySelector(".criminalsContainer").innerHTML = criminalsToRender.map((criminalObject) => {
+            // Step 2 - Filter all relationships to get only ones for this criminal
+            const facilityRelationshipsForThisCriminal = allRelationships.filter(cf => cf.criminalId === criminalObject.id)
+
+            // Step 3 - Convert the relationships to facilities with map()
+            const facilities = facilityRelationshipsForThisCriminal.map(cf => {
+                const matchingFacilityObject = allFacilities.find(facility => facility.id === cf.facilityId)
+                return matchingFacilityObject
+            })
+
+            // Must pass the matching facilities to the Criminal component
+            return CriminalHTML(criminalObject, facilities)
+        }
+    ).join("")
+}
 
 
+/* ------ Old Redering
 const addCriminalsToDOM = (criminalsArray) => {
     const contentElement = document.querySelector(".criminalsContainer");
     let HTMLArray = criminalsArray.map(criminal => {
@@ -300,7 +319,37 @@ const addCriminalsToDOM = (criminalsArray) => {
     contentElement.innerHTML = HTMLArray.join(" "); // this line REPLACES whatever is currently in the inner HTML of contentElement
 
 }
+*/
 
+export function CriminalList(){
+    // Kick off the fetching of both collections of data
+    // if the funciton is receiving an argument when called, just update DOM, don't re-fetch new data
+    if(arguments.length === 1){ // check if the function is receiving a specific list of criminals to display
+        const facilities = useFacilities()
+        const crimFac = useCriminalFacilities()
+        const criminals = arguments[0]; // make the criminal list to render = to the first passed-in argument
+        // Pass all three collections of data to render()
+        addCriminalsToDOM(criminals, facilities, crimFac)
+    }
+    else if(arguments.length === 0){ 
+        // no specific list of criminals to display is passed in
+        // re-fetch and re-render everything
+        getFacilities()
+            .then(getCriminalFacilities)
+            .then(
+                () => {
+                    // Pull in the data now that it has been fetched
+                    const facilities = useFacilities()
+                    const crimFac = useCriminalFacilities()
+                    const criminals = useCriminals()
+                    // Pass all three collections of data to render()
+                    addCriminalsToDOM(criminals, facilities, crimFac)
+                }
+            )
+    }
+}
+
+/* ----- old CriminalList 
 export const CriminalList = () => {
     console.log("creating CriminalList");
     getCriminals()
@@ -310,3 +359,4 @@ export const CriminalList = () => {
     })
     
 }
+*/

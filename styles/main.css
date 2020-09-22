@@ -29,6 +29,27 @@ body {
 
 .note{
     margin-bottom: 20px;
+    display: flex;
+    border-left: 2px solid darkgray;
+}
+
+.note-content-left {
+    padding: 5px;
+    /* background-color: palegoldenrod; */
+    flex-basis: 85%;
+}
+
+.note-actions-right {
+    padding: 5px;
+    /* background-color: palevioletred; */
+    flex-basis: 15%;
+}
+
+
+.note-actions-right > .deleteNoteBtn {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
 }
 
 .noteListContainer { 
@@ -39,7 +60,7 @@ body {
     /* margin-left: -25px; */
     /* max-width: 400px; */
     /* float: left; */
-    background-color: darkcyan;
+    background-color: lightgray;
 }
 
 #noteForm--text {
@@ -97,7 +118,7 @@ h2 {
 }
 
 .criminalsContainer { 
-    border: red dotted 2px;
+    /* border: red dotted 2px; */
     padding: 20px;
     display: flex;
     /* grid-gap: 1em; defines both grid-row-gap and grid-column-gap (1em for both) */
@@ -169,7 +190,7 @@ h2 {
     display: flex;
     flex-direction: row;
     margin: 50px 25px;
-    border: 2px dashed darkgreen;
+    /* border: 2px dashed darkgreen; */
     min-width: 550px;
 }
 

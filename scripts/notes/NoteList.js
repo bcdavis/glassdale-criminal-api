@@ -1,6 +1,7 @@
 import { getNotes, useNotes, deleteNote } from "./NoteProvider.js"
 import { NoteHTMLConverter } from "./Note.js"
 import { useCriminals, getCriminals } from "../criminals/CriminalProvider.js"
+import { NoteForm } from "./NoteForm.js"
 
 
 const contentTarget = document.querySelector(".allNotesHere")
@@ -47,4 +48,6 @@ const render = (notes, suspects) => {
         })
         return NoteHTMLConverter(noteObj)
     }).join("");
+
+    NoteForm();
 }
